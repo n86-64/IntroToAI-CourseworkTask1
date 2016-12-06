@@ -9,6 +9,7 @@
  * and functions with NQueens-specific names that call the functions that modify the
  */
 
+#pragma warning (disable : 4996)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,28 +47,53 @@ int main(int argc, const char * argv[])
      * We'll begin by putting the first queen into column ), or specified from the command line
    */
    valueToAdd = 0;
+
    if(argc==2)
      {
        valueToAdd = atoi(argv[1]);
-       if (valueToAdd >=N || valueToAdd <0)
+       if (valueToAdd >= N || valueToAdd < 0)
            PrintThisMessageAndExit("Invalid Input");
      }
 	   
 	
 	AddQueenToNextRowInColumn(valueToAdd);
     CalculateNumberOfVulnerableQueensForWorkingCandidate(); //should return zero because there is only one queen:)
-    numberOfSolutionsExamined=1;
+    numberOfSolutionsExamined = 1;
     
     //and we can put this as our first item in the list to start the process
     AddWorkingCandidateToCurrentList();
-    
+   
     
     //Now we will go into a loop examining solutions until we find one that is full and has no vulnerable queens
     
-   // end of  statement dealing with search
-    
-    
-    
+	while (numberOfCompleteSolutionsFound != 8 || currentListOfCandidates.indexOfLastEntryAdded != NOTFOUND) 
+	{
+		// test working candidiate 
+		// if viable generate new solutions and then test them.
+		// else dont and delete
+		
+		AddWorkingCandidateToExaminedList();
+		CopySolutionFromCurrentListIntoWorkingCandidate(currentListOfCandidates.indexOfLastEntryAdded);
+		
+		// test the candidate.
+		CalculateNumberOfVulnerableQueensForWorkingCandidate();
+		
+		if (workingCandidate.score == 0) 
+		{
+		      // generate new solutions here
+		}
+		else 
+		{
+			// dump bad solutions
+			AddWorkingCandidateToExaminedList();
+		}
+
+		numberOfSolutionsExamined += 1;
+	}
+
+
+	// Prints the final solution for the system. 
+	PrintFinalSolutionAndExit();
     
     return 0;
 }

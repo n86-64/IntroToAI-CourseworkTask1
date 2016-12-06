@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 James Smith. All rights reserved.
 //
 
-
+#pragma warning(disable : 4996)
 
 
 #include <stdio.h>
