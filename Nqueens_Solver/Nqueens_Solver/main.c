@@ -34,8 +34,7 @@ int main(int argc, const char * argv[])
      * but aren't declared globally becuase we don't want the other functions to change them inadvertently */
     int numberOfCompleteSolutionsFound = 0; //simple flag to let us know whether we have stopped
     int numberOfSolutionsExamined = 0; //simple counter
-    int indexOfSolutionWeAreLookingAt; //index in list of current solution being examined
-    int newLength, valueToAdd; // used when we extend the working candidate
+    int valueToAdd; // used when we extend the working candidate
 	
 
     //start off by emptying the lists of candidate solutions
@@ -48,43 +47,67 @@ int main(int argc, const char * argv[])
    */
    valueToAdd = 0;
 
-   if(argc==2)
-     {
-       valueToAdd = atoi(argv[1]);
-       if (valueToAdd >= N || valueToAdd < 0)
-           PrintThisMessageAndExit("Invalid Input");
-     }
-	   
-	
-	AddQueenToNextRowInColumn(valueToAdd);
-    CalculateNumberOfVulnerableQueensForWorkingCandidate(); //should return zero because there is only one queen:)
-    numberOfSolutionsExamined = 1;
+   if (argc == 2)
+   {
+	   valueToAdd = atoi(argv[1]);
+	   if (valueToAdd >= N || valueToAdd < 0)
+		   PrintThisMessageAndExit("Invalid Input");
+   }
     
     //and we can put this as our first item in the list to start the process
-    AddWorkingCandidateToCurrentList();
-   
-    
+
+	AddQueenToNextRowInColumn(valueToAdd);
+
+	int i;
+	for (i = N - 1; i >= 0; i--)
+	{
+		MoveQueenInRowToNewCol(valueToAdd, i);
+		AddWorkingCandidateToCurrentList();
+	}
+
     //Now we will go into a loop examining solutions until we find one that is full and has no vulnerable queens
     
-	while (numberOfCompleteSolutionsFound != 8 || currentListOfCandidates.indexOfLastEntryAdded != NOTFOUND) 
+	while (numberOfCompleteSolutionsFound != 1 && currentListOfCandidates.indexOfLastEntryAdded != NOTFOUND) 
 	{
-		// test working candidiate 
-		// if viable generate new solutions and then test them.
-		// else dont and delete
-		
-		AddWorkingCandidateToExaminedList();
+
+		// Copy solution and remove it from current list
 		CopySolutionFromCurrentListIntoWorkingCandidate(currentListOfCandidates.indexOfLastEntryAdded);
+		RemoveFromListParam1_CandidateSolutionAtIndexParam2(&currentListOfCandidates, currentListOfCandidates.indexOfLastEntryAdded);
 		
 		// test the candidate.
 		CalculateNumberOfVulnerableQueensForWorkingCandidate();
-		
+
+
 		if (workingCandidate.score == 0) 
 		{
-		      // generate new solutions here
+			if (valueToAdd != N - 1) 
+			{
+				// generate new solutions here using the copy system, and then clear the working candidate for testing. 
+				valueToAdd++;
+
+				// add one queen to board and then use loop to add solutions for all column postions and add solutions to current list. 
+				AddQueenToNextRowInColumn(valueToAdd);
+				
+				int i;
+				for (i = 0; i < N; i++) 
+				{
+					MoveQueenInRowToNewCol(valueToAdd, i);
+					AddWorkingCandidateToCurrentList();
+				}
+			}
+			else 
+			{
+				numberOfCompleteSolutionsFound = 1;
+			}
 		}
 		else 
 		{
-			// dump bad solutions
+			// dump bad solutions into examined list for future refrence.
+			if (workingCandidate.numberOfDefinedValues > currentListOfCandidates.listEntries[currentListOfCandidates.indexOfLastEntryAdded].numberOfDefinedValues) 
+			{
+				valueToAdd--;
+			}
+
 			AddWorkingCandidateToExaminedList();
 		}
 
@@ -94,6 +117,8 @@ int main(int argc, const char * argv[])
 
 	// Prints the final solution for the system. 
 	PrintFinalSolutionAndExit();
+
+
     
     return 0;
 }
