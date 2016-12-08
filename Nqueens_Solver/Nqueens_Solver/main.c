@@ -59,9 +59,8 @@ int main(int argc, const char * argv[])
     //and we can put this as our first item in the list to start the process
 
 	AddQueenToNextRowInColumn(columnPos);
-	MoveQueenInRowToNewCol(valueToAdd, columnPos);
 	AddWorkingCandidateToCurrentList();
-	// CleanWorkingCandidate();
+	CleanWorkingCandidate();
 
     //Now we will go into a loop examining solutions until we find one that is full and has no vulnerable queens
     
