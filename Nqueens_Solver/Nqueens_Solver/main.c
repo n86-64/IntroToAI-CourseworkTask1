@@ -124,4 +124,5 @@ int main(int argc, const char * argv[])
 *  Fix the bug where the valueToAdd is not decremented properly according to the numberOfDefinedValues
 *  It turns out despite the change in values the number of defined values dosent get change at the same time.
 *  May need investigation or a re-write may need to take place.
+*  occurs around when 34 attempts are made. 
 */
