@@ -4,7 +4,7 @@
 * Author Jim Smith 16-10-14
 */
 
-
+#pragma warning (disable : 4996)
 
 #include "NQueenschecker.h"
 
@@ -157,6 +157,8 @@ void MoveQueenInRowToNewCol(int row, int col)
 //this isthe function we call when the goal is found
 void PrintFinalSolutionAndExit(void)
 {
+	char exitChar = '/0';
+
     //make sure we can access the proposed solution
     extern candidateSolution workingCandidate;
     int position;
@@ -175,7 +177,10 @@ void PrintFinalSolutionAndExit(void)
     //else //print in format to be automatically checked
   {
     printf("success: after %d attemptss \n", numberOfCallsMade);
-    
+   
+
+	scanf("%c", &exitChar);
+
 #ifndef FINALTEST
     for(position=0;position < 3200000; position++)
         ;

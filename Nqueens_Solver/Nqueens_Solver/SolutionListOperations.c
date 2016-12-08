@@ -22,11 +22,11 @@
 /* this is just a really handy function to use for debugging or for dealing with unexpected situations in your code*/
     void PrintThisMessageAndExit(char *message)
   {
-    //char throwawayToEndProramme;
+    char throwawayToEndProramme;
     printf("%s\n",message);
 #ifndef FINALTEST
-    //    printf("press any key to continue");
-    //scanf("%c",&throwawayToEndProramme);
+        printf("press any key to continue");
+        scanf("%c",&throwawayToEndProramme);
 #endif
     exit(0);
   }

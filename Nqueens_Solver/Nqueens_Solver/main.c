@@ -35,6 +35,7 @@ int main(int argc, const char * argv[])
     int numberOfCompleteSolutionsFound = 0; //simple flag to let us know whether we have stopped
     int numberOfSolutionsExamined = 0; //simple counter
     int valueToAdd; // used when we extend the working candidate
+	char exitChar = '/0';
 	
 
     //start off by emptying the lists of candidate solutions
@@ -46,30 +47,26 @@ int main(int argc, const char * argv[])
      * We'll begin by putting the first queen into column ), or specified from the command line
    */
    valueToAdd = 0;
+   int columnPos = 0;
 
    if (argc == 2)
    {
-	   valueToAdd = atoi(argv[1]);
-	   if (valueToAdd >= N || valueToAdd < 0)
+	   columnPos = atoi(argv[1]);
+	   if (columnPos >= N || columnPos < 0)
 		   PrintThisMessageAndExit("Invalid Input");
    }
     
     //and we can put this as our first item in the list to start the process
 
-	AddQueenToNextRowInColumn(valueToAdd);
-
-	int i;
-	for (i = N - 1; i >= 0; i--)
-	{
-		MoveQueenInRowToNewCol(valueToAdd, i);
-		AddWorkingCandidateToCurrentList();
-	}
+	AddQueenToNextRowInColumn(columnPos);
+	MoveQueenInRowToNewCol(valueToAdd, columnPos);
+	AddWorkingCandidateToCurrentList();
+	// CleanWorkingCandidate();
 
     //Now we will go into a loop examining solutions until we find one that is full and has no vulnerable queens
     
 	while (numberOfCompleteSolutionsFound != 1 && currentListOfCandidates.indexOfLastEntryAdded != NOTFOUND) 
 	{
-
 		// Copy solution and remove it from current list
 		CopySolutionFromCurrentListIntoWorkingCandidate(currentListOfCandidates.indexOfLastEntryAdded);
 		RemoveFromListParam1_CandidateSolutionAtIndexParam2(&currentListOfCandidates, currentListOfCandidates.indexOfLastEntryAdded);
@@ -102,7 +99,7 @@ int main(int argc, const char * argv[])
 		}
 		else 
 		{
-			// dump bad solutions into examined list for future refrence.
+			// dump bad solutions into examined list for future refrence. And update search level when appropriate. 
 			if (workingCandidate.numberOfDefinedValues > currentListOfCandidates.listEntries[currentListOfCandidates.indexOfLastEntryAdded].numberOfDefinedValues) 
 			{
 				valueToAdd--;
@@ -118,10 +115,14 @@ int main(int argc, const char * argv[])
 	// Prints the final solution for the system. 
 	PrintFinalSolutionAndExit();
 
-
     
     return 0;
 }
 
 
 
+/* TODO -  
+*  Fix the bug where the valueToAdd is not decremented properly according to the numberOfDefinedValues
+*  It turns out despite the change in values the number of defined values dosent get change at the same time.
+*  May need investigation or a re-write may need to take place.
+*/
