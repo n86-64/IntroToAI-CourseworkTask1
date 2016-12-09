@@ -27,14 +27,12 @@ candidateList listOfExaminedCandidates; // this is where we will store all the o
 //************************ don't edit anything above this line***********************//
 int main(int argc, const char * argv[])
 {
-    
     /* the next set of variables get used within our main function
      * but aren't declared globally becuase we don't want the other functions to change them inadvertently */
     int numberOfCompleteSolutionsFound = 0; //simple flag to let us know whether we have stopped
     int numberOfSolutionsExamined = 0; //simple counter
     int valueToAdd; // used when we extend the working candidate
 	
-
     //start off by emptying the lists of candidate solutions
     CleanListsOfSolutionsToStart();
 	CleanWorkingCandidate();
