@@ -264,7 +264,7 @@ void RemoveFromListParam1_CandidateSolutionAtIndexParam2( candidateList *listToE
 
 
         //  ok, then we can proceed
-        printf("removing solution at index %d \n", solutionIndex);
+   /*     printf("removing solution at index %d \n", solutionIndex);*/
         //if the one to remove is the last on the list,  its all very simple
         if (solutionIndex == numberOfEntriesInThisList)
           {
