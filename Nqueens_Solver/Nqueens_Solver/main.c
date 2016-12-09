@@ -25,8 +25,6 @@ candidateList listOfExaminedCandidates; // this is where we will store all the o
 
 
 //************************ don't edit anything above this line***********************//
-
-
 int main(int argc, const char * argv[])
 {
     
@@ -35,7 +33,6 @@ int main(int argc, const char * argv[])
     int numberOfCompleteSolutionsFound = 0; //simple flag to let us know whether we have stopped
     int numberOfSolutionsExamined = 0; //simple counter
     int valueToAdd; // used when we extend the working candidate
-	char exitChar = '/0';
 	
 
     //start off by emptying the lists of candidate solutions
@@ -57,10 +54,8 @@ int main(int argc, const char * argv[])
    }
     
     //and we can put this as our first item in the list to start the process
-
 	AddQueenToNextRowInColumn(columnPos);
 	AddWorkingCandidateToCurrentList();
-	CleanWorkingCandidate();
 
     //Now we will go into a loop examining solutions until we find one that is full and has no vulnerable queens
     
@@ -72,7 +67,6 @@ int main(int argc, const char * argv[])
 		
 		// test the candidate.
 		CalculateNumberOfVulnerableQueensForWorkingCandidate();
-
 
 		if (workingCandidate.score == 0) 
 		{
@@ -101,7 +95,7 @@ int main(int argc, const char * argv[])
 			// dump bad solutions into examined list for future refrence. And update search level when appropriate. 
 			if (workingCandidate.numberOfDefinedValues > currentListOfCandidates.listEntries[currentListOfCandidates.indexOfLastEntryAdded].numberOfDefinedValues) 
 			{
-				valueToAdd--;
+				valueToAdd = (currentListOfCandidates.listEntries[currentListOfCandidates.indexOfLastEntryAdded].numberOfDefinedValues - 1);
 			}
 
 			AddWorkingCandidateToExaminedList();
@@ -110,12 +104,8 @@ int main(int argc, const char * argv[])
 		numberOfSolutionsExamined += 1;
 	}
 
-
 	// Prints the final solution for the system. 
-	PrintFinalSolutionAndExit();
-
-    
-    return 0;
+	PrintFinalSolutionAndExit();    
 }
 
 
@@ -125,4 +115,5 @@ int main(int argc, const char * argv[])
 *  It turns out despite the change in values the number of defined values dosent get change at the same time.
 *  May need investigation or a re-write may need to take place.
 *  occurs around when 34 attempts are made. 
+*  (Fixed - 9/12/16)
 */
