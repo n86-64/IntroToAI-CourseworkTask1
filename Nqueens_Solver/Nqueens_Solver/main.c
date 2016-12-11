@@ -56,7 +56,6 @@ int main(int argc, const char * argv[])
 	AddWorkingCandidateToCurrentList();
 
     //Now we will go into a loop examining solutions until we find one that is full and has no vulnerable queens
-    
 	while (numberOfCompleteSolutionsFound != 1 && currentListOfCandidates.indexOfLastEntryAdded != NOTFOUND) 
 	{
 		// Copy solution and remove it from current list
