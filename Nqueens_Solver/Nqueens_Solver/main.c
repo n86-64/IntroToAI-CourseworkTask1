@@ -22,7 +22,7 @@ candidateSolution workingCandidate;//this one will hold the soltion we arecurren
 candidateList  currentListOfCandidates; // this list will store all the soltion we;ve created but not examined yet
 candidateList listOfExaminedCandidates; // this is where we will store all the ones we're done with
 
-extern int numberOfCallsMade; // ooh cheeky
+extern int numberOfCallsMade; // correction offset. 
 
 //************************ don't edit anything above this line***********************//
 int main(int argc, const char * argv[])
@@ -99,7 +99,6 @@ int main(int argc, const char * argv[])
 
 	}
 	
-	// cheecky correction to get round jims dum system. 
 	numberOfCallsMade++;
 
 	// Prints the final solution for the system. 
